@@ -1,0 +1,19 @@
+# Personal data: kabhi git ya kisi ko mat bhejo
+assistant.db
+history.jsonl
+eval_results.json
+my_data/
+backups/
+recordings/
+
+# Python ka kachra
+__pycache__/
+.DS_Store
+embed_cache.json
+agent_eval_results.json
+models/
+assistant.db-*
+*.db-wal
+*.db-shm
+*.db-journal
+logs/

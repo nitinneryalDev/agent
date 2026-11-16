@@ -1,0 +1,20 @@
+[
+  {"text": "aaj walk ho gayi", "tools": ["check_in_habit"], "args": {"habit": "walk"}},
+  {"text": "meri chabi kitchen drawer mein hai", "tools": ["remember_item"], "args": {"item": "chabi", "place": "kitchen"}},
+  {"text": "car ki chabi kahan rakhi hai", "tools": ["find_item"]},
+  {"text": "Sapiens kitab padhni shuru ki, bedside table par hai", "tools": ["add_thing"], "args": {"category": "book"}},
+  {"text": "mere paas kaunsi books hain", "tools": ["find_things"], "reply_has": "Atomic"},
+  {"text": "kal subah 7 baje gym jana yaad dilana", "tools": ["add_task"], "args": {"due": "<TOMORROW> 07:00"}},
+  {"text": "bill bhar diya, wo task complete karo", "tools": ["complete_task"]},
+  {"text": "2 glass paani aur piya", "tools": ["log_health"], "args": {"kind": "hydration", "value": 2}},
+  {"text": "aaj energy 8 hai", "tools": ["log_health"], "args": {"kind": "energy", "value": 8}},
+  {"text": "papa ka number 9811111111 hai, save kar lo", "tools": ["add_contact"], "args": {"phone": "9811111111"}},
+  {"text": "maa ko phone lagao", "tools": ["call_contact"], "reply_has": "9876543210"},
+  {"text": "mera janamdin kab hai", "tools": ["search_notes"], "reply_any": ["July", "1995"]},
+  {"text": "marathon daudna mera goal hai, target March 2027", "tools": ["add_goal"], "args": {"target_date": "2027-03"}},
+  {"text": "kitne din se walking kar raha hoon", "tools": ["habit_status"]},
+  {"text": "thanks bhai", "tools": []},
+  {"text": "Nike Pegasus laundry mein daal diye", "tools": ["update_thing"], "args": {"thing": "pegasus"}},
+  {"text": "passport ab bedroom almari mein rakh diya", "tools": ["remember_item"], "args": {"item": "passport", "place": "almari"}},
+  {"text": "meri family mein kaun kaun hai", "tools": ["search_notes"], "reply_any": ["Piar", "Lata"]}
+]

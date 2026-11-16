@@ -1,0 +1,1016 @@
+[
+ {
+  "id": "A1",
+  "cat": "reminder_time",
+  "text": "kal subah 7 baje gym jana yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "gym",
+   "due": "<TOMORROW> 07:00"
+  }
+ },
+ {
+  "id": "A3",
+  "cat": "reminder_time",
+  "text": "parso sawa 5 baje bank jana hai yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "bank",
+   "due": "<DAYAFTER> 17:15"
+  }
+ },
+ {
+  "id": "A5",
+  "cat": "reminder_time",
+  "text": "raat ko paune 8 baje dawai leni hai yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "dawai",
+   "due": "<NEXT:19:45>"
+  }
+ },
+ {
+  "id": "A6",
+  "cat": "reminder_time",
+  "text": "kal subah doodh wale ko paise dene hain yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "doodh",
+   "due": "<TOMORROW>"
+  },
+  "strict": {
+   "due_hour_range": [
+    5,
+    12
+   ]
+  },
+  "note": "part of day without an hour must still fire in the morning, not at 23:59"
+ },
+ {
+  "id": "A7",
+  "cat": "reminder_time",
+  "text": "somvar ko subah 11 baje client meeting yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "client meeting",
+   "due": "<WEEKDAY:0> 11:00"
+  }
+ },
+ {
+  "id": "A8",
+  "cat": "reminder_time",
+  "text": "agle mahine 20 tareekh ko rent dena yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "rent",
+   "due": "<NEXTMONTH:20>"
+  }
+ },
+ {
+  "id": "A9",
+  "cat": "reminder_time",
+  "text": "25 november ko shaam 4 baje interview hai, yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "interview",
+   "due": "-11-25 16:00"
+  }
+ },
+ {
+  "id": "A10",
+  "cat": "reminder_time",
+  "text": "lunch ke baad dawai leni hai yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "dawai"
+  },
+  "strict": {
+   "due_hour_range": [
+    12,
+    16
+   ]
+  },
+  "note": "'lunch ke baad' is a time; silently dropping it = no reminder"
+ },
+ {
+  "id": "A11",
+  "cat": "reminder_time",
+  "text": "aadhe ghante baad chai banana yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "chai"
+  },
+  "strict": {
+   "due_within_min": [
+    30,
+    3
+   ]
+  }
+ },
+ {
+  "id": "A13",
+  "cat": "reminder_time",
+  "text": "7 baje gym jana hai yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "gym",
+   "due": "<NEAREST:07:00|19:00>"
+  },
+  "note": "bare hour = the nearest upcoming 7 o'clock (at night that is 7 AM)"
+ },
+ {
+  "id": "B1",
+  "cat": "recurring",
+  "text": "roz subah 7 baje dawai lena yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "dawai",
+   "due": "<NEXT:07:00>"
+  },
+  "check": {
+   "task_recurrence": {
+    "dawai": "daily"
+   }
+  }
+ },
+ {
+  "id": "B2",
+  "cat": "recurring",
+  "text": "har somvar subah 9 baje team meeting ka reminder laga do",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "team meeting",
+   "due": "<WEEKDAY:0> 09:00"
+  },
+  "check": {
+   "task_recurrence": {
+    "team meeting": "weekly:0"
+   }
+  }
+ },
+ {
+  "id": "B3",
+  "cat": "recurring",
+  "text": "har mahine 1 tareekh ko rent dena yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "rent",
+   "due": "<NEXTMONTH:01>"
+  },
+  "check": {
+   "task_recurrence": {
+    "rent": "monthly"
+   }
+  }
+ },
+ {
+  "id": "C1",
+  "cat": "reschedule",
+  "text": "dentist wala reminder 5 baje kar do",
+  "tools": [
+   "reschedule_task"
+  ],
+  "check": {
+   "task_due": {
+    "dentist": "<DAYAFTER> 17:00"
+   },
+   "task_count": {
+    "dentist": 1
+   }
+  }
+ },
+ {
+  "id": "C2",
+  "cat": "reschedule",
+  "text": "doodh wala reminder kal ki jagah parso kar do",
+  "tools": [
+   "reschedule_task"
+  ],
+  "check": {
+   "task_due": {
+    "doodh": "<DAYAFTER> 18:00"
+   },
+   "task_count": {
+    "doodh": 1
+   }
+  }
+ },
+ {
+  "id": "C4",
+  "cat": "reschedule",
+  "turns": [
+   {
+    "text": "parso shaam 5 baje car service yaad dilana",
+    "tools": [
+     "add_task"
+    ],
+    "args": {
+     "due": "<DAYAFTER> 17:00"
+    }
+   },
+   {
+    "text": "usko kal pe shift kar do",
+    "tools": [
+     "reschedule_task"
+    ]
+   }
+  ],
+  "check": {
+   "task_due": {
+    "car service": "<TOMORROW> 17:00"
+   },
+   "task_count": {
+    "car service": 1
+   }
+  }
+ },
+ {
+  "id": "C5",
+  "cat": "reschedule",
+  "text": "bijli ka bill wala reminder 10 minute baad phir se yaad dilana",
+  "tools": [
+   "add_task",
+   "reschedule_task"
+  ],
+  "check": {
+   "task_due_within_any": {
+    "bijli": [
+     10,
+     3
+    ]
+   }
+  },
+  "note": "snooze: a new reminder at +10 min is acceptable"
+ },
+ {
+  "id": "D1",
+  "cat": "done",
+  "text": "doodh le aaya, wo reminder done kar do",
+  "tools": [
+   "complete_task"
+  ],
+  "check": {
+   "task_absent": "doodh"
+  }
+ },
+ {
+  "id": "D2",
+  "cat": "done",
+  "text": "gas cylinder book kar diya",
+  "tools": [
+   "complete_task"
+  ],
+  "check": {
+   "task_absent": "gas cylinder"
+  }
+ },
+ {
+  "id": "D3",
+  "cat": "done",
+  "text": "dentist appointment ho gaya",
+  "tools": [
+   "complete_task"
+  ],
+  "check": {
+   "task_absent": "dentist"
+  }
+ },
+ {
+  "id": "D4",
+  "cat": "done",
+  "text": "bill bhar diya",
+  "tools": [
+   "complete_task"
+  ],
+  "check": {
+   "task_absent": "bijli"
+  }
+ },
+ {
+  "id": "E1",
+  "cat": "habit",
+  "text": "aaj walk kar li",
+  "tools": [
+   "check_in_habit"
+  ],
+  "args": {
+   "habit": "walk"
+  },
+  "check": {
+   "checkin_day": {
+    "walking": "<TODAY>"
+   }
+  }
+ },
+ {
+  "id": "E3",
+  "cat": "habit",
+  "text": "kal reading miss ho gayi thi, aaj kar li",
+  "tools": [
+   "check_in_habit"
+  ],
+  "args": {
+   "habit": "reading"
+  },
+  "check": {
+   "checkin_day": {
+    "reading": "<TODAY>"
+   },
+   "checkin_absent": {
+    "reading": "<YESTERDAY>"
+   }
+  }
+ },
+ {
+  "id": "E4",
+  "cat": "habit",
+  "text": "walking ki streak kitni hai",
+  "tools": [
+   "habit_status"
+  ],
+  "reply_has": "walking: 2 din"
+ },
+ {
+  "id": "E5",
+  "cat": "habit",
+  "text": "kal meditation kiya tha, mark kar do",
+  "tools": [
+   "check_in_habit"
+  ],
+  "args": {
+   "habit": "meditation"
+  },
+  "check": {
+   "checkin_day": {
+    "meditation": "<YESTERDAY>"
+   }
+  }
+ },
+ {
+  "id": "E7",
+  "cat": "habit",
+  "text": "is hafte kitne din walking ki",
+  "tools": [
+   "habit_status"
+  ],
+  "reply_any": [
+   "3/7",
+   "3 din",
+   "7 mein se 3",
+   "3 out of 7"
+  ],
+  "note": "walking was done 3 of the last 7 days but the streak is 2"
+ },
+ {
+  "id": "F1",
+  "cat": "health",
+  "text": "abhi 2 glass paani aur piya",
+  "tools": [
+   "log_health"
+  ],
+  "args": {
+   "kind": "hydration"
+  },
+  "check": {
+   "health_today": {
+    "hydration": 6
+   }
+  },
+  "note": "4 already logged today; 'aur' = 2 more"
+ },
+ {
+  "id": "F2",
+  "cat": "health",
+  "text": "kal raat sirf 5 ghante neend aayi",
+  "tools": [
+   "log_health"
+  ],
+  "args": {
+   "kind": "sleep",
+   "value": 5
+  },
+  "check": {
+   "health_today": {
+    "sleep": 5
+   }
+  }
+ },
+ {
+  "id": "F6",
+  "cat": "health",
+  "text": "aaj kitna paani piya",
+  "tools": [
+   "health_summary"
+  ],
+  "reply_any": [
+   "4 glass",
+   "4.0 glass",
+   "4 gilas"
+  ],
+  "note": "today = 4 glasses; 7-day average is 6"
+ },
+ {
+  "id": "G1",
+  "cat": "things",
+  "text": "car ki chabi drawer mein rakhi hai",
+  "tools": [
+   "remember_item"
+  ],
+  "args": {
+   "item": "chabi",
+   "place": "drawer"
+  },
+  "check": {
+   "item_place": {
+    "car ki chabi": "drawer"
+   }
+  }
+ },
+ {
+  "id": "G2",
+  "cat": "things",
+  "text": "chabi kahan rakhi hai",
+  "tools": [
+   "find_item"
+  ],
+  "reply_has": "key stand"
+ },
+ {
+  "id": "G4",
+  "cat": "things",
+  "text": "Atomic Habits Rahul ko de di padhne ke liye",
+  "tools": [
+   "update_thing"
+  ],
+  "args": {
+   "thing": "atomic"
+  },
+  "check": {
+   "thing_any": {
+    "Atomic Habits": [
+     "lent",
+     "rahul",
+     "udhaar"
+    ]
+   }
+  }
+ },
+ {
+  "id": "H1",
+  "cat": "contacts",
+  "text": "Rahul ka number kya hai",
+  "tools": [
+   "call_contact"
+  ],
+  "reply_has": "9812345678"
+ },
+ {
+  "id": "H3",
+  "cat": "contacts",
+  "text": "Priya ka number 9898989898 hai save kar lo",
+  "tools": [
+   "add_contact"
+  ],
+  "args": {
+   "name": "priya",
+   "phone": "9898989898"
+  }
+ },
+ {
+  "id": "I1",
+  "cat": "goals",
+  "text": "December tak 5 kilo weight kam karna hai, ye goal save karo",
+  "tools": [
+   "add_goal"
+  ],
+  "args": {
+   "target_date": "<THISYEAR>-12"
+  }
+ },
+ {
+  "id": "I2",
+  "cat": "goals",
+  "text": "mere goals ka kya status hai",
+  "tools": [
+   "list_goals"
+  ],
+  "reply_has": "Marathon"
+ },
+ {
+  "id": "I3",
+  "cat": "goals",
+  "text": "agle saal june tak AWS certification ka goal add karo",
+  "tools": [
+   "add_goal"
+  ],
+  "args": {
+   "title": "aws",
+   "target_date": "<NEXTYEAR>-06"
+  }
+ },
+ {
+  "id": "J1",
+  "cat": "notes",
+  "text": "main kahan rehta hoon",
+  "tools": [
+   "search_notes"
+  ],
+  "reply_any": [
+   "Gurgaon",
+   "Gurugram"
+  ]
+ },
+ {
+  "id": "J2",
+  "cat": "notes",
+  "text": "where do I work",
+  "tools": [
+   "search_notes"
+  ],
+  "reply_has": "ERA"
+ },
+ {
+  "id": "J3",
+  "cat": "devanagari",
+  "text": "मेरा जन्मदिन कब है",
+  "tools": [
+   "search_notes"
+  ],
+  "reply_any": [
+   "July",
+   "1995"
+  ]
+ },
+ {
+  "id": "K1",
+  "cat": "query",
+  "text": "kal kya kya hai",
+  "tools": [],
+  "reply_has": "doodh",
+  "strict": {
+   "reply_not_has": [
+    "dentist",
+    "gas cylinder"
+   ]
+  },
+  "note": "agenda ka jawab code (briefing.py) deta hai, koi tool call nahi hota"
+ },
+ {
+  "id": "K2",
+  "cat": "query",
+  "text": "is hafte kya pending hai",
+  "tools": [],
+  "reply_has": "doodh",
+  "note": "agenda ka jawab code (briefing.py) deta hai, koi tool call nahi hota"
+ },
+ {
+  "id": "L1",
+  "cat": "delete",
+  "turns": [
+   {
+    "text": "gas cylinder wala kaam hata do",
+    "tools": [
+     "remove_task"
+    ],
+    "reply_has": "hata doon"
+   },
+   {
+    "text": "haan",
+    "tools": [
+     "confirm_delete"
+    ]
+   }
+  ],
+  "check": {
+   "task_absent": "gas cylinder"
+  }
+ },
+ {
+  "id": "L3",
+  "cat": "delete",
+  "turns": [
+   {
+    "text": "reading habit band kar do",
+    "tools": [
+     "remove_habit"
+    ],
+    "reply_has": "hata doon"
+   },
+   {
+    "text": "haan",
+    "tools": [
+     "confirm_delete"
+    ]
+   }
+  ],
+  "check": {
+   "habit_absent": "reading"
+  }
+ },
+ {
+  "id": "L4",
+  "cat": "delete",
+  "turns": [
+   {
+    "text": "umbrella wali entry mita do",
+    "tools": [
+     "remove_item"
+    ],
+    "reply_has": "hata doon"
+   },
+   {
+    "text": "haan",
+    "tools": [
+     "confirm_delete"
+    ]
+   }
+  ],
+  "check": {
+   "item_absent": "umbrella"
+  }
+ },
+ {
+  "id": "L5",
+  "cat": "devanagari",
+  "turns": [
+   {
+    "text": "दूध वाला रिमाइंडर कैंसिल करो",
+    "tools": [
+     "remove_task"
+    ],
+    "reply_has": "doodh"
+   },
+   {
+    "text": "हाँ",
+    "tools": [
+     "confirm_delete"
+    ]
+   }
+  ],
+  "check": {
+   "task_absent": "doodh"
+  }
+ },
+ {
+  "id": "M1",
+  "cat": "multi_intent",
+  "text": "walking ho gayi aur 3 glass paani piya",
+  "tools": [
+   "check_in_habit",
+   "log_health"
+  ],
+  "strict": {
+   "calls": [
+    {
+     "name": "check_in_habit",
+     "args": {
+      "habit": "walking"
+     }
+    },
+    {
+     "name": "log_health",
+     "args": {
+      "kind": "hydration",
+      "value": 3
+     }
+    }
+   ]
+  }
+ },
+ {
+  "id": "M2",
+  "cat": "multi_intent",
+  "text": "kal shaam 6 baje doodh lena yaad dilana aur parso subah 10 baje car wash",
+  "tools": [
+   "add_task"
+  ],
+  "strict": {
+   "calls": [
+    {
+     "name": "add_task",
+     "args": {
+      "title": "doodh",
+      "due": "<TOMORROW> 18:00"
+     }
+    },
+    {
+     "name": "add_task",
+     "args": {
+      "title": "car wash",
+      "due": "<DAYAFTER> 10:00"
+     }
+    }
+   ]
+  }
+ },
+ {
+  "id": "M3",
+  "cat": "multi_intent",
+  "text": "passport locker mein rakh diya aur charger bag mein",
+  "tools": [
+   "remember_item"
+  ],
+  "strict": {
+   "calls": [
+    {
+     "name": "remember_item",
+     "args": {
+      "item": "passport",
+      "place": "locker"
+     }
+    },
+    {
+     "name": "remember_item",
+     "args": {
+      "item": "charger",
+      "place": "bag"
+     }
+    }
+   ]
+  }
+ },
+ {
+  "id": "N1",
+  "cat": "correction",
+  "turns": [
+   {
+    "text": "kal subah 6 baje jogging yaad dilana",
+    "tools": [
+     "add_task"
+    ],
+    "args": {
+     "due": "<TOMORROW> 06:00"
+    }
+   },
+   {
+    "text": "nahi 6 nahi 7 baje",
+    "tools": [
+     "reschedule_task"
+    ]
+   }
+  ],
+  "check": {
+   "task_due": {
+    "jogging": "<TOMORROW> 07:00"
+   },
+   "task_count": {
+    "jogging": 1
+   }
+  }
+ },
+ {
+  "id": "N2",
+  "cat": "correction",
+  "turns": [
+   {
+    "text": "kal shaam 5 baje dhobi ko kapde dene hain yaad dilana",
+    "tools": [
+     "add_task"
+    ],
+    "args": {
+     "due": "<TOMORROW> 17:00"
+    }
+   },
+   {
+    "text": "sorry 5 nahi 6 baje",
+    "tools": [
+     "reschedule_task"
+    ]
+   }
+  ],
+  "check": {
+   "task_due": {
+    "dhobi": "<TOMORROW> 18:00"
+   },
+   "task_count": {
+    "dhobi": 1
+   }
+  }
+ },
+ {
+  "id": "O2",
+  "cat": "pronoun",
+  "turns": [
+   {
+    "text": "Rahul ka number kya hai",
+    "tools": [
+     "call_contact"
+    ]
+   },
+   {
+    "text": "use call karo",
+    "tools": [
+     "call_contact"
+    ],
+    "reply_has": "9812345678"
+   }
+  ]
+ },
+ {
+  "id": "O3",
+  "cat": "pronoun",
+  "turns": [
+   {
+    "text": "Atomic Habits kahan rakhi hai",
+    "tools": [
+     "find_things",
+     "find_item"
+    ]
+   },
+   {
+    "text": "wo khatam ho gayi",
+    "tools": [
+     "update_thing"
+    ]
+   }
+  ],
+  "check": {
+   "thing_any": {
+    "Atomic Habits": [
+     "finish"
+    ]
+   }
+  }
+ },
+ {
+  "id": "P1",
+  "cat": "english",
+  "text": "remind me to call the plumber tomorrow at 7",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "plumber",
+   "due": "<TOMORROW>"
+  },
+  "strict": {
+   "due_hour_in": [
+    7,
+    19
+   ]
+  }
+ },
+ {
+  "id": "P2",
+  "cat": "english",
+  "text": "I walked today",
+  "tools": [
+   "check_in_habit"
+  ],
+  "args": {
+   "habit": "walk"
+  }
+ },
+ {
+  "id": "P3",
+  "cat": "english",
+  "text": "where is my passport",
+  "tools": [
+   "find_item"
+  ],
+  "reply_has": "locker"
+ },
+ {
+  "id": "Q1",
+  "cat": "devanagari",
+  "text": "कल सुबह 8 बजे दवाई लेनी है याद दिलाना",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "dawai",
+   "due": "<TOMORROW> 08:00"
+  }
+ },
+ {
+  "id": "Q2",
+  "cat": "devanagari",
+  "text": "आज 6 गिलास पानी पिया",
+  "tools": [
+   "log_health"
+  ],
+  "args": {
+   "kind": "hydration",
+   "value": 6
+  }
+ },
+ {
+  "id": "R1",
+  "cat": "asr_noisy",
+  "text": "mujhe kal subah 9 baje bijli ka bil jama karna hai yaad dilwana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "bijli",
+   "due": "<TOMORROW> 09:00"
+  },
+  "strict": {
+   "arg_not_has": {
+    "title": "yaad"
+   }
+  }
+ },
+ {
+  "id": "R2",
+  "cat": "asr_noisy",
+  "text": "kal sham 7 bajay doodh lana yad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "doodh",
+   "due": "<TOMORROW> 19:00"
+  },
+  "strict": {
+   "arg_not_has": {
+    "title": "yad"
+   }
+  }
+ },
+ {
+  "id": "R3",
+  "cat": "asr_noisy",
+  "text": "walkinghogayi",
+  "tools": [
+   "check_in_habit"
+  ],
+  "args": {
+   "habit": "walking"
+  }
+ },
+ {
+  "id": "R6",
+  "cat": "asr_noisy",
+  "text": "kl 8 bje gym jana h yad dila dena",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "gym",
+   "due": "<TOMORROW> 08:00"
+  }
+ },
+ {
+  "id": "R7",
+  "cat": "asr_noisy",
+  "text": "kal subha 7 bajay yoga class yaad dilana",
+  "tools": [
+   "add_task"
+  ],
+  "args": {
+   "title": "yoga",
+   "due": "<TOMORROW> 07:00"
+  }
+ },
+ {
+  "id": "S1",
+  "cat": "chitchat",
+  "text": "aaj bahut thak gaya yaar",
+  "tools": []
+ },
+ {
+  "id": "S3",
+  "cat": "chitchat",
+  "text": "good night",
+  "tools": []
+ },
+ {
+  "id": "S6",
+  "cat": "chitchat",
+  "text": "aaj office mein kaam bahut tha",
+  "tools": []
+ },
+ {
+  "id": "S7",
+  "cat": "chitchat",
+  "text": "mujhe neend aa rahi hai",
+  "tools": []
+ }
+]

@@ -1,0 +1,11 @@
+[
+  {"question": "What is my name?", "expect_any": ["Nitin", "Neryal"]},
+  {"question": "Where do I work?", "expect_any": ["ERA Group"]},
+  {"question": "Where do I live now?", "expect_any": ["Gurgaon", "Gurugram"]},
+  {"question": "Where is my hometown?", "expect_any": ["Joginder Nagar"]},
+  {"question": "What is my designation?", "expect_any": ["Senior Frontend Developer", "Frontend"]},
+  {"question": "What are my parents' names?", "expect_any": ["Piar Chand", "Lata"]},
+  {"question": "When was I born?", "expect_any": ["1995", "3 July"]},
+  {"question": "What is my favourite movie?", "unanswerable": true},
+  {"question": "What is my bank balance?", "unanswerable": true}
+]
