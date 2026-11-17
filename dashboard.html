@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Personal Assistant</title>
+<link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+<header class="appbar">
+  <div class="appbar-inner">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><span data-icon="sparkle" data-size="16"></span></span>
+      <div>
+        <h1>Personal Assistant</h1>
+        <p class="sub">Private · runs on this Mac</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-assistant" data-view="assistant" aria-controls="view-assistant" aria-selected="true"><span data-icon="chat" data-size="16"></span>Assistant</button>
+      <button class="tab" role="tab" id="tab-data" data-view="data" aria-controls="view-data" aria-selected="false" tabindex="-1"><span data-icon="layers" data-size="16"></span>My data</button>
+      <button class="tab" role="tab" id="tab-notes" data-view="notes" aria-controls="view-notes" aria-selected="false" tabindex="-1"><span data-icon="book" data-size="16"></span>Notes</button>
+      <button class="tab" role="tab" id="tab-system" data-view="system" aria-controls="view-system" aria-selected="false" tabindex="-1"><span data-icon="chart" data-size="16"></span>System</button>
+    </nav>
+    <div class="appbar-right">
+      <button class="search-trigger" id="paletteBtn" type="button" aria-label="Search or run a command">
+        <span data-icon="search" data-size="15"></span><span class="grow">Search or jump…</span><span class="kbd">⌘K</span>
+      </button>
+      <div class="engine" id="engine" data-ok="unknown" tabindex="0" data-tip-title="Ollama status" data-tip="Kya hai: Ollama wo program hai jo AI model aapke laptop par chalata hai.&#10;Kaise nikalta hai: dashboard har kuch second mein Ollama ko ping karta hai.&#10;Agar laal ho: Ollama app kholo, phir System tab mein Reload notes dabao.">
+        <span class="led"></span><span id="engineText">Checking…</span><span class="models" id="engineModels"></span>
+      </div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Theme"></button>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="banner" id="banner" role="status" hidden></div>
+
+  <!-- ====================== Assistant ====================== -->
+  <section class="view" id="view-assistant" role="tabpanel" aria-labelledby="tab-assistant">
+    <div class="assistant-grid">
+      <div class="panel chat">
+        <div class="chat-head">
+          <div class="title">
+            <h2>Assistant</h2>
+            <p class="sub">Habits, reminders, belongings, contacts, health and notes</p>
+          </div>
+          <button class="btn ghost sm" id="newChatBtn" type="button"><span data-icon="edit" data-size="14"></span>New chat</button>
+        </div>
+        <div class="chat-log" id="chatLog" role="log" aria-live="polite" aria-label="Conversation">
+          <div class="chat-empty" id="chatEmpty">
+            <div class="hero-icon" aria-hidden="true"><span data-icon="sparkle" data-size="22"></span></div>
+            <h3>Namaste! Aaj kya karna hai?</h3>
+            <p>Seedhi Hinglish mein likho ya bolo. Main save karunga, dhundhunga aur yaad dilaunga.</p>
+            <div class="suggestions" id="suggestions"></div>
+          </div>
+        </div>
+        <form class="composer" id="chatForm" autocomplete="off">
+          <div class="composer-box">
+            <textarea id="chatInput" rows="1" maxlength="1000" placeholder="Message… e.g. “walking ho gayi aaj”" aria-label="Message"></textarea>
+            <button class="icon-btn mic" id="micBtn" type="button" aria-label="Speak" title="Bolkar likho (m)" aria-pressed="false" data-state="idle"></button>
+            <button class="icon-btn send" id="sendBtn" type="submit" aria-label="Send"><span data-icon="arrow-up" data-size="17"></span></button>
+          </div>
+          <div class="composer-meta">
+            <label class="switch"><input type="checkbox" id="speakToggle"><span class="track"></span>Speak replies</label>
+            <label class="sel">Voice
+              <select id="ttsEngine" aria-label="Voice output engine">
+                <option value="browser">Natural (Browser)</option>
+                <option value="mac">System (Mac say)</option>
+              </select>
+            </label>
+            <label class="sel">Mic
+              <select id="voiceEngine" aria-label="Voice input engine">
+                <option value="whisper">Whisper (offline)</option>
+                <option value="browser">Browser (fast)</option>
+              </select>
+            </label>
+            <label class="sel">Language
+              <select id="micLang" aria-label="Voice language">
+                <option value="en-IN">Hinglish</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="en-US">English</option>
+              </select>
+            </label>
+            <span class="level" id="voiceLevel" hidden aria-hidden="true"><span></span></span>
+            <span class="voice-status" id="voiceStatus" role="status"></span>
+            <span class="hint"><span class="kbd">⏎</span> send <span class="kbd">⇧⏎</span> new line <span class="kbd">/</span> focus</span>
+          </div>
+        </form>
+      </div>
+
+      <aside class="side" aria-label="Today">
+        <section class="panel card">
+          <div class="card-head"><h2>Today</h2><span class="small muted" id="todayLabel"></span></div>
+          <div class="ring-row">
+            <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bg" cx="32" cy="32" r="26"></circle><circle class="fg" id="ringFg" cx="32" cy="32" r="26"></circle></svg>
+            <div class="ring-text"><strong id="ringValue">0</strong><span id="ringNote">habits</span></div>
+          </div>
+          <ul class="checklist" id="todayHabits"><li class="skeleton"><span></span><span></span><span></span></li></ul>
+        </section>
+        <section class="panel card">
+          <div class="card-head"><h2>Upcoming</h2><span class="pill" id="dueCount">0</span></div>
+          <form class="quick-add" id="quickTaskForm" autocomplete="off">
+            <input class="field" id="quickTaskInput" maxlength="200" placeholder="Add a reminder… “kal 6 baje doodh lena”" aria-label="Add a reminder">
+          </form>
+          <ul class="checklist" id="todayTasks"><li class="skeleton"><span></span><span></span><span></span></li></ul>
+        </section>
+        <section class="panel card">
+          <div class="card-head"><h2>Health today</h2><span class="small muted">+ adds a glass of water</span></div>
+          <div class="health-mini" id="todayHealth"></div>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ====================== My data ====================== -->
+  <section class="view" id="view-data" role="tabpanel" aria-labelledby="tab-data" hidden>
+    <div class="panel stat-strip" id="statStrip"></div>
+    <div class="data-grid">
+      <section class="panel card span-7" data-card="habits">
+        <div class="card-head">
+          <h2><span data-icon="flame" data-size="15"></span>Habits</h2>
+          <div class="actions"><span class="small muted">Last 14 days</span><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Habits"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <form class="quick-add" id="habitAddForm" autocomplete="off">
+          <input class="field" id="habitAddInput" maxlength="60" placeholder="New habit… e.g. “reading”" aria-label="New habit">
+        </form>
+        <div class="rows" id="habitsList"><div class="skeleton"><span></span><span></span><span></span></div></div>
+      </section>
+      <section class="panel card span-5" data-card="tasks">
+        <div class="card-head">
+          <h2><span data-icon="list" data-size="15"></span>Reminders</h2>
+          <div class="actions"><span class="pill" id="tasksDone"></span><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Reminders"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <form class="quick-add" id="dataTaskForm" autocomplete="off">
+          <input class="field" id="dataTaskInput" maxlength="200" placeholder="Add… “parso subah 10 baje dentist”" aria-label="Add a reminder">
+        </form>
+        <div class="rows" id="tasksList"><div class="skeleton"><span></span><span></span><span></span></div></div>
+      </section>
+      <section class="panel card span-7" data-card="health">
+        <div class="card-head">
+          <h2><span data-icon="activity" data-size="15"></span>Health</h2>
+          <div class="actions"><span class="small muted">14-day trend · today · 7-day avg</span><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Health"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <div class="rows" id="healthList"></div>
+      </section>
+      <section class="panel card span-5" data-card="goals">
+        <div class="card-head">
+          <h2><span data-icon="target" data-size="15"></span>Goals</h2>
+          <div class="actions"><span class="small muted">Time elapsed</span><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Goals"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <div class="rows" id="goalsList"></div>
+      </section>
+      <section class="panel card span-12" data-card="things">
+        <div class="card-head">
+          <h2><span data-icon="box" data-size="15"></span>Belongings</h2>
+          <div class="actions"><div class="filter-pills" id="thingFilters" role="group" aria-label="Category"></div><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Belongings"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <div class="table-wrap" id="thingsTable"></div>
+      </section>
+      <section class="panel card span-6" data-card="items">
+        <div class="card-head">
+          <h2><span data-icon="pin" data-size="15"></span>Where things are</h2>
+          <div class="actions"><input class="field search-input" id="itemSearch" type="search" placeholder="Filter…" aria-label="Filter items"><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Where things are"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <div class="table-wrap" id="itemsTable"></div>
+      </section>
+      <section class="panel card span-6" data-card="contacts">
+        <div class="card-head">
+          <h2><span data-icon="user" data-size="15"></span>Contacts</h2>
+          <div class="actions"><button class="icon-btn collapse-btn" type="button" aria-label="Collapse Contacts"><span data-icon="chevron-down" data-size="15"></span></button></div>
+        </div>
+        <div class="rows" id="contactsList"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====================== Notes ====================== -->
+  <section class="view" id="view-notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
+    <section class="panel ask" aria-labelledby="notes-title">
+      <div class="ask-head">
+        <h2 id="notes-title">Ask your notes</h2>
+        <p class="muted">Answers only from the files in <code>my_data</code>. Nothing is saved.</p>
+      </div>
+      <form class="askbar" id="notesForm" autocomplete="off">
+        <input class="field" id="notesInput" type="text" maxlength="1000" placeholder="e.g. Where do I work?" aria-labelledby="notes-title">
+        <button class="icon-btn mic" id="notesMic" type="button" aria-label="Speak" title="Bolkar poochho" aria-pressed="false" data-state="idle"></button>
+        <button class="btn primary" id="notesBtn" type="submit" data-mode="ask">Ask</button>
+      </form>
+      <div class="chips" id="notesChips" aria-label="Example questions"></div>
+      <p class="status" id="notesStatus" role="status"></p>
+      <div class="answer" id="notesAnswer" hidden>
+        <p class="asked" id="notesAsked"></p>
+        <p class="answer-text"><span id="notesAnswerText"></span><span class="caret" id="notesCaret" hidden></span></p>
+      </div>
+      <ol class="stages" id="stages" hidden aria-label="Progress">
+        <li data-stage="search" data-state="pending"><span class="mark"></span><span>Search</span><span class="time">&ndash;</span></li>
+        <li data-stage="first" data-state="pending"><span class="mark"></span><span>First word</span><span class="time">&ndash;</span></li>
+        <li data-stage="write" data-state="pending"><span class="mark"></span><span>Writing</span><span class="time">&ndash;</span></li>
+      </ol>
+      <div class="sources" id="sources" hidden>
+        <h3 id="sourcesTitle">Passages the model read</h3>
+        <ul id="sourcesList"></ul>
+      </div>
+    </section>
+  </section>
+
+  <!-- ====================== System ====================== -->
+  <section class="view" id="view-system" role="tabpanel" aria-labelledby="tab-system" hidden>
+    <div class="system-actions">
+      <p class="small muted" id="systemNote">Live numbers, refreshed every 5 seconds.</p>
+      <button class="btn sm" id="reloadBtn" type="button"><span data-icon="refresh" data-size="14"></span>Reload notes</button>
+    </div>
+    <div class="groups" id="groups"></div>
+    <div class="charts">
+      <section class="panel chart chart-assistant" aria-labelledby="assistant-chart-title">
+        <div class="panel-head">
+          <h2 id="assistant-chart-title">Assistant reply time</h2>
+          <div class="legend">
+            <span><i class="swatch" style="background:var(--good)"></i>Instant (no model)</span>
+            <span><i class="swatch" style="background:var(--accent)"></i>Model + tools</span>
+            <span><i class="swatch" style="background:var(--text-3)"></i>Chat</span>
+          </div>
+        </div>
+        <div id="assistantChart"></div>
+      </section>
+      <section class="panel chart chart-time" aria-labelledby="time-title">
+        <div class="panel-head">
+          <h2 id="time-title">Notes: where the time goes</h2>
+          <div class="legend">
+            <span><i class="swatch" style="background:var(--stage-search)"></i>Search</span>
+            <span><i class="swatch" style="background:var(--stage-wait)"></i>First word</span>
+            <span><i class="swatch" style="background:var(--stage-write)"></i>Writing</span>
+          </div>
+        </div>
+        <div id="timeChart"></div>
+      </section>
+      <section class="panel chart chart-score" aria-labelledby="score-title">
+        <div class="panel-head">
+          <h2 id="score-title">Search match quality</h2>
+          <div class="legend">
+            <span><i class="swatch" style="background:var(--accent);border-radius:50%"></i>Answered</span>
+            <span><i class="swatch ring"></i>I don't know</span>
+          </div>
+        </div>
+        <div id="scoreChart"></div>
+      </section>
+      <section class="panel files-panel" aria-labelledby="files-title">
+        <h2 id="files-title">Files used most</h2>
+        <div class="filebars" id="fileBars"></div>
+      </section>
+      <section class="panel recent-panel" aria-labelledby="recent-title">
+        <h2 id="recent-title">Recent notes questions</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Time</th><th>Question</th><th>Best file</th><th>Score</th><th>Total</th><th>Result</th></tr></thead>
+            <tbody id="recentBody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="recentEmpty" hidden>No questions yet. Ask one in the Notes tab.</p>
+      </section>
+    </div>
+  </section>
+</main>
+
+<!-- Command palette (⌘K) -->
+<div class="overlay" id="palette" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="palette-search">
+      <span data-icon="search" data-size="17"></span>
+      <input id="paletteInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type a command or search…" aria-label="Command" aria-controls="paletteList">
+      <span class="kbd">Esc</span>
+    </div>
+    <ul class="palette-list" id="paletteList" role="listbox" aria-label="Commands"></ul>
+    <div class="palette-foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> move</span><span><span class="kbd">⏎</span> run</span><span><span class="kbd">?</span> shortcuts</span></div>
+  </div>
+</div>
+
+<!-- Keyboard shortcuts (?) -->
+<div class="overlay" id="shortcuts" hidden>
+  <div class="dialog shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+    <div class="shortcuts-head"><h2 id="shortcuts-title">Keyboard shortcuts</h2><button class="icon-btn" type="button" id="shortcutsClose" aria-label="Close"><span data-icon="x" data-size="16"></span></button></div>
+    <dl class="shortcut-list">
+      <div><dt>Command palette</dt><dd><span class="kbd">⌘</span><span class="kbd">K</span></dd></div>
+      <div><dt>Focus the message box</dt><dd><span class="kbd">/</span></dd></div>
+      <div><dt>Send · new line</dt><dd><span class="kbd">⏎</span><span class="kbd">⇧⏎</span></dd></div>
+      <div><dt>Stop voice, speech or auto-send · close</dt><dd><span class="kbd">Esc</span></dd></div>
+      <div><dt>Switch tab (when a tab is focused)</dt><dd><span class="kbd">←</span><span class="kbd">→</span></dd></div>
+      <div><dt>This list</dt><dd><span class="kbd">?</span></dd></div>
+    </dl>
+  </div>
+</div>
+
+<div id="tip" role="tooltip" hidden><div class="tip-title" id="tipTitle"></div><div id="tipBody"></div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="/static/dashboard.js"></script>
+</body>
+</html>

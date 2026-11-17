@@ -1,0 +1,14 @@
+[
+  {"text": "headphones gym bag mein rakh diye", "tools": ["remember_item"], "args": {"item": "headphone"}},
+  {"text": "mera wallet kidhar hai", "tools": ["find_item"]},
+  {"text": "aaj 45 minute training ki", "tools": ["log_health"], "args": {"kind": "training", "value": 45}},
+  {"text": "neend sirf 5 ghante hui", "tools": ["log_health"], "args": {"kind": "sleep", "value": 5}},
+  {"text": "parso shaam 7 baje Rohit ki birthday party hai, yaad dilana", "tools": ["add_task"], "args": {"due": "<DAYAFTER> 19:00"}},
+  {"text": "kaunse kaam baaki hain", "tools": ["list_tasks"]},
+  {"text": "meditation ki streak kitni hai", "tools": ["habit_status"]},
+  {"text": "Rohit bhai ka number 9900990099 save karo", "tools": ["add_contact"], "args": {"phone": "9900990099"}},
+  {"text": "mere papa ka naam kya hai", "tools": ["search_notes"], "reply_has": "Piar"},
+  {"text": "white shirt almari mein hai", "tools": ["add_thing", "remember_item"]},
+  {"text": "aaj ka din kaisa raha", "tools": []},
+  {"text": "Atomic Habits ab bedside table par hai", "tools": ["update_thing"], "args": {"thing": "atomic"}}
+]
